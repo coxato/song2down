@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Songs streaming</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="left">
+            <ul id="songs-list">
+                
+            </ul>
+            <div id="upload-song">
+                <form method="post" action="/song" enctype="multipart/form-data">
+                    <input type="file" name="file">  
+                    <input type="submit" value="upload"> 
+                </form>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="player-container">
+                <div id="actual-song-title">tu-carcel</div>
+                <div id="waveform"></div>
+                <div id="player-buttons"></div>
+                <div class="download">
+                    <a id="download" href="/song/tu-carcel.mp3" download>Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script type="module" src="./js/app.mjs"></script>
+</body>
+</html>
