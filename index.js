@@ -1,7 +1,7 @@
 const { join } = require('path');
 const express = require('express');
 const mediaserver = require('mediaserver');
-const fsPromises = require('fs/promises');
+const fsPromises = require('fs').promises;
 const multer = require("multer");
 const app = express();
 
