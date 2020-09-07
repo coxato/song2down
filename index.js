@@ -1,7 +1,7 @@
 const { join } = require('path');
 const express = require('express');
 const mediaserver = require('mediaserver');
-const fsPromises = require('fs').promises;
+const fs = require('fs');
 const multer = require("multer");
 const app = express();
 
@@ -28,14 +28,14 @@ app.get('/', (req, res) => {
 
 // songs
 app.get('/songs', async (req, res) => {
-    const jsonFile = await fsPromises.readFile(join(__dirname, 'miniDB.json'), 'utf-8');
+    const jsonFile = await fs.promises.readFile(join(__dirname, 'miniDB.json'), 'utf-8');
     // console.log(jsonFile);
     res.json(JSON.parse(jsonFile));
 })
 
 app.get('/song/:name', async (req, res) => {
     const { name } = req.params;
-    // const songFile = await fsPromises.readFile(join(__dirname, 'songs', name+'.mp3'));
+    // const songFile = await fs.promises.readFile(join(__dirname, 'songs', name+'.mp3'));
     console.log("el name", name);
     mediaserver.pipe(req, res, join(__dirname, 'songs', name))
 })
@@ -45,20 +45,16 @@ app.post('/song', upload.single('file'), async (req, res) => {
     const name = req.file.originalname;
     console.log("######### filename", name);
     // get mini db
-    const miniDB = await fsPromises.readFile(join(__dirname, 'miniDB.json'), 'utf-8');
+    const miniDB = await fs.promises.readFile(join(__dirname, 'miniDB.json'), 'utf-8');
     const songs = JSON.parse(miniDB);
     songs.push({
         name 
     });
     // save in db
-    await fsPromises.writeFile(join(__dirname, 'miniDB.json'), JSON.stringify(songs));
+    await fs.promises.writeFile(join(__dirname, 'miniDB.json'), JSON.stringify(songs));
  
     res.redirect('/');
 
 })
-
-
-
-
 
 app.listen(3000, () => console.log('server started at localhost:3000'));
